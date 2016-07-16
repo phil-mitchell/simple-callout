@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>simple-callout Demo</title>
+
+    <!-- Import Web Components polyfill -->
+    <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+
+    <!-- Use shadow DOM if available -->
+    <script>
+      window.Polymer = { dom: 'shadow' };
+    </script>
+
+    <!-- Import component -->
+    <link rel="import" href="../simple-callout.html">
+
+    <style>
+      body {
+        font-family: sans-serif;
+      }
+
+      button {
+        display: block;
+      }
+
+      simple-callout {
+        padding: 0.75em;
+        margin: 12px;
+        font-size: 14px;
+      }
+    </style>
+
+  </head>
+  <body unresolved>
+
+    <button id="button">toggle callout</button>
+
+    <simple-callout id="callout" arrow="top left">
+      <span>an example callout</span>
+    </simple-callout>
+
+
+    <script>
+      var callout = document.querySelector('#callout'),
+          button = document.querySelector('#button');
+
+      button.addEventListener('click', function() {
+        callout.open();
+      });
+    </script>
+
+  </body>
+</html>

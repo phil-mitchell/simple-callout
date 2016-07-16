@@ -1,0 +1,151 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<dom-module id="simple-callout">
+  <template>
+    <style>
+      :host, *, *::before, *::after {
+        box-sizing: border-box;
+        -moz-osx-font-smoothing: grayscale;
+         -webkit-font-smoothing: antialiased;
+                 font-smoothing: antialiased;
+      }
+
+      /**
+       * Core
+       */
+      :host {
+        position: relative;
+        display: none;
+        background: white;
+        border-radius: 3px;
+        box-shadow: 0 1px 2px rgba(0,0,0, 0.2),
+                    0 0 1px rgba(0,0,0, 0.1);
+      }
+
+      :host([visible]) {
+        display: inline-block;
+      }
+
+      :host::before {
+        content: '';
+        position: absolute;
+        height: var(--simple-callout-arrow-size, 0.75rem);
+        width: var(--simple-callout-arrow-size, 0.75rem);
+        transform: rotate(45deg);
+        background: inherit;
+      }
+
+      /* Make sure content is on top of arrow */
+      :host ::content * {
+        position: relative;
+        z-index: 1;
+      }
+
+      /**
+       * Y arrow positioning
+       */
+      :host([arrow*="top"]) {
+        transform: translateY(calc(var(--simple-callout-arrow-size, 0.75rem) / 2));
+      }
+
+      :host([arrow*="top"])::before {
+        top: calc(0px - var(--simple-callout-arrow-size, 0.75rem) / 2);
+        box-shadow: -1px -1px rgba(0,0,0, 0.075);
+      }
+
+      :host([arrow*="bottom"]) {
+        transform: translateY(calc(0 - var(--simple-callout-arrow-size, 0.75rem) / 2));
+      }
+
+      :host([arrow*="bottom"])::before {
+        bottom: calc(0px - var(--simple-callout-arrow-size, 0.75rem) / 2);
+        box-shadow: 1px 1px 1px rgba(0,0,0, 0.2);
+      }
+
+      /**
+       * X arrow positioning
+       */
+      :host([arrow*="left"])::before {
+        left: var(--simple-callout-arrow-size, 0.75rem);
+      }
+
+      :host([arrow*="center"])::before {
+        left: calc(50% - var(--simple-callout-arrow-size, 0.75rem) / 2);
+      }
+
+      :host([arrow*="right"])::before {
+        right: var(--simple-callout-arrow-size, 0.75rem);
+      }
+
+      /**
+       * Sides arrow positioning
+       */
+      :host([arrow="left"]) {
+        transform: translateX(calc(var(--simple-callout-arrow-size, 0.75rem) / 2));
+      }
+
+      :host([arrow="left"])::before {
+        left: calc(0px - var(--simple-callout-arrow-size, 0.75rem) / 2);
+        box-shadow: -1px 1px 1px rgba(0,0,0, 0.075);
+      }
+
+      :host([arrow="right"]) {
+        transform: translateX(0 - calc(var(--simple-callout-arrow-size, 0.75rem) / 2));
+      }
+
+      :host([arrow="right"])::before {
+        right: calc(0px - var(--simple-callout-arrow-size, 0.75rem) / 2);
+        box-shadow: 1px -1px 0 rgba(0,0,0, 0.075);
+      }
+    </style>
+
+    <content></content>
+
+  </template>
+
+  <script src="../web-animations-js/web-animations.min.js"></script>
+  <script>
+    import toggle from './behaviors/toggle';
+
+    class SimpleCallout {
+      beforeRegister() {
+        this.is = 'simple-callout',
+
+        this.properties = {
+
+          /**
+          * Position of callout arrow, space-separated list
+          * (top/bottom) (left/center|right) || left/right
+          * @type {String}
+          */
+          arrow: {
+            type: String,
+            reflectToAttribute: true,
+            observer: '_setTransformOrigin'
+          }
+
+        };
+      };
+
+      get behaviors() {
+        return [ toggle ];
+      }
+
+      /**
+       * Set transform origin based on arrow position
+       * @param {String} arrow Current value of arrow property
+       * @returns {undefined}
+       */
+      _setTransformOrigin(arrow) {
+        let transformOrigins = [
+          'transform-origin',
+          'webkit-transform-origin'
+        ];
+
+        transformOrigins.forEach((transform) => this.style[transform] = arrow);
+      }
+
+    };
+    Polymer(SimpleCallout)
+  </script>
+</dom-module>

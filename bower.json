@@ -1,0 +1,30 @@
+{
+  "name": "simple-callout",
+  "version": "0.0.0",
+  "authors": [
+    "Simpla &lt;friends@simpla.io&gt;"
+  ],
+  "description": "A simple callout box/tooltip",
+  "keywords": [
+    "web-component",
+    "web-components",
+    "polymer",
+    "simple-callout"
+  ],
+  "main": "simple-callout.html",
+  "license": "MIT",
+  "homepage": "https://github.com/SimpleElements/simple-callout/",
+  "ignore": [
+    "*",
+    "!*.html",
+    "!LICENSE"
+  ],
+  "dependencies": {
+    "webcomponentsjs": "^0.7.14",
+    "polymer": "^1.6.0",
+    "web-animations-js": "^2.2.1"
+  },
+  "devDependencies": {
+    "web-component-tester": "^4.0.0"
+  }
+}
