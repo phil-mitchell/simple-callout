@@ -1,14 +1,28 @@
-const ANIMATION = {
-  frames: [
-    { transform: 'scale(0.95, 0.8)', opacity: 0 },
-    { transform: 'scale(1, 1)', opacity: 1 }
-  ],
-  opts: {
-    easing: 'cubic-bezier(0.215, 0.61, 0.355, 1)',
-    fill: 'both',
-    duration: 75
-  }
-};
+const STANDARD_EASING = 'cubic-bezier(0.4, 0.0, 0.2, 1)',
+      ANIMATIONS = [
+        {
+          frames: [
+            { transform: 'scale(0.75, 0.85)' },
+            { transform: 'scale(1, 1)' }
+          ],
+          opts: {
+            easing: STANDARD_EASING,
+            fill: 'both',
+            duration: 120
+          }
+        },
+        {
+          frames: [
+            { opacity: 0 },
+            { opacity: 1 }
+          ],
+          opts: {
+            easing: STANDARD_EASING,
+            fill: 'both',
+            duration: 90
+          }
+        }
+      ];
 
 export default {
   properties: {
@@ -90,11 +104,17 @@ export default {
    * @return {undefined}
    */
   _showCallout() {
-    let animation;
+    let animations = [];
 
     this.visible = true;
-    animation = this.animate(ANIMATION.frames, ANIMATION.opts);
-    animation.onfinish = () => this._opened = true
+
+    ANIMATIONS.forEach((effect) => {
+      this.animate(effect.frames, effect.opts);
+    });
+
+    Promise.all(
+      this.getAnimations().map((animation) => animation.finished)
+    ).then(() => this._opened = true);
   },
 
   /**
@@ -102,11 +122,17 @@ export default {
    * @return {undefined}
    */
   _hideCallout() {
-    let animation;
+    let animations = [];
 
     this._opened = false;
-    animation = this.animate(ANIMATION.frames.slice().reverse(), ANIMATION.opts);
-    animation.onfinish = () => this.visible = false;
+
+    ANIMATIONS.forEach((effect) => {
+      this.animate(effect.frames.slice().reverse(), effect.opts);
+    });
+
+    Promise.all(
+      this.getAnimations().map((animation) => animation.finished)
+    ).then(() => this.visible = false);
   },
 
   /**
