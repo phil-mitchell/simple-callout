@@ -84,6 +84,7 @@ simple-callout {
 MIT © [Simpla](https://www.simpla.io)
 
 [webcomponents]: https://github.com/webcomponents/webcomponentsjs
+[webanimations]: https://github.com/web-animations/web-animations-js
 [promise]: https://github.com/stefanpenner/es6-promise
 
 [bower-badge]: https://img.shields.io/bower/v/simple-callout.svg
