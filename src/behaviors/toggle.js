@@ -17,7 +17,7 @@ const STANDARD_EASING = 'cubic-bezier(0.4, 0.0, 0.2, 1)',
             { opacity: 1 }
           ],
           opts: {
-            easing: STANDARD_EASING,
+            easing: 'ease',
             fill: 'both',
             duration: 90
           }
@@ -92,11 +92,16 @@ export default {
 
   /**
    * Open and close the callout on active change
-   * @param  {Boolean} active state of the active property
+   * @param  {Boolean} active   Current state of the active property
+   * @param  {Boolean} previous Previous state of the active property
    * @return {undefined}
    */
-  _activeChanged(active) {
-    active ? this._showCallout() : this._hideCallout()
+  _activeChanged(active, previous) {
+    if (active) {
+      this._showCallout();
+    } else if (previous) {
+      this._hideCallout();
+    }
   },
 
   /**

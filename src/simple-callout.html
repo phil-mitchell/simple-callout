@@ -118,7 +118,6 @@
 
   </template>
 
-  <script src="../web-animations-js/web-animations-next.min.js"></script>
   <script>
     import toggle from './behaviors/toggle';
 
@@ -157,7 +156,7 @@
 
       /**
        * Set transform origin based on origin
-       * @param {String} arrow Current value of arrow property
+       * @param {String} origin Current value of arrow property
        * @returns {undefined}
        */
       _setTransformOrigin(origin) {
@@ -171,4 +170,6 @@
     };
     Polymer(SimpleCallout)
   </script>
+  <script src="../es6-promise/promise.min.js" async></script>
+  <script src="../web-animations-js/web-animations-next.min.js" async></script>
 </dom-module>
