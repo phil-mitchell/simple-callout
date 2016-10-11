@@ -3,13 +3,6 @@
 <dom-module id="simple-callout">
   <template>
     <style>
-      /**
-       * Defaults
-       */
-      :root {
-        --simple-callout-arrow-size: 8px;
-      }
-
       :host, *, *::before, *::after {
         box-sizing: border-box;
         -moz-osx-font-smoothing: grayscale;
@@ -39,8 +32,8 @@
       :host([arrow])::before {
         content: '';
         position: absolute;
-        height: var(--simple-callout-arrow-size);
-        width: var(--simple-callout-arrow-size);
+        height: var(--simple-callout-arrow-size, 8px);
+        width: var(--simple-callout-arrow-size, 8px);
         transform: rotate(45deg);
         background: inherit;
       }
@@ -56,59 +49,59 @@
        */
       /* Top */
       :host([arrow][origin*="top"]) {
-        transform: translateY(calc(var(--simple-callout-arrow-size) / 2));
+        transform: translateY(calc(var(--simple-callout-arrow-size, 8px) / 2));
       }
 
       :host([arrow][origin*="top"])::before {
-        top: calc(0px - var(--simple-callout-arrow-size) / 2);
+        top: calc(0px - var(--simple-callout-arrow-size, 8px) / 2);
         box-shadow: -1px -1px rgba(0,0,0, 0.075);
         border-top-left-radius: 2px;
       }
 
       /* Bottom */
       :host([arrow][origin*="bottom"]) {
-        transform: translateY(calc(0 - var(--simple-callout-arrow-size) / 2));
+        transform: translateY(calc(0 - var(--simple-callout-arrow-size, 8px) / 2));
       }
 
       :host([arrow][origin*="bottom"])::before {
-        bottom: calc(0px - var(--simple-callout-arrow-size) / 2);
+        bottom: calc(0px - var(--simple-callout-arrow-size, 8px) / 2);
         box-shadow: 1px 1px 1px rgba(0,0,0, 0.2);
         border-bottom-right-radius: 2px;
       }
 
        /* Top/bottom Left */
       :host([arrow][origin*="left"])::before {
-        left: var(--simple-callout-arrow-size);
+        left: var(--simple-callout-arrow-size, 8px);
       }
 
       :host([arrow][origin*="center"])::before {
-        left: calc(50% - var(--simple-callout-arrow-size) / 2);
+        left: calc(50% - var(--simple-callout-arrow-size, 8px) / 2);
       }
 
       :host([arrow][origin*="right"])::before {
-        right: var(--simple-callout-arrow-size);
+        right: var(--simple-callout-arrow-size, 8px);
       }
 
       /* Left side */
       :host([arrow][origin="left"]) {
-        transform: translateX(calc(var(--simple-callout-arrow-size) / 2));
+        transform: translateX(calc(var(--simple-callout-arrow-size, 8px) / 2));
       }
 
       :host([arrow][origin="left"])::before {
-        top: calc(50% - var(--simple-callout-arrow-size) / 2);
-        left: calc(0px - var(--simple-callout-arrow-size) / 2);
+        top: calc(50% - var(--simple-callout-arrow-size, 8px) / 2);
+        left: calc(0px - var(--simple-callout-arrow-size, 8px) / 2);
         box-shadow: -1px 1px 1px rgba(0,0,0, 0.075);
         border-bottom-left-radius: 2px;
       }
 
       /* Right side */
       :host([arrow][origin="right"]) {
-        transform: translateX(0 - calc(var(--simple-callout-arrow-size) / 2));
+        transform: translateX(0 - calc(var(--simple-callout-arrow-size, 8px) / 2));
       }
 
       :host([arrow][origin="right"])::before {
-        top: calc(50% - var(--simple-callout-arrow-size) / 2);
-        right: calc(0px - var(--simple-callout-arrow-size) / 2);
+        top: calc(50% - var(--simple-callout-arrow-size, 8px) / 2);
+        right: calc(0px - var(--simple-callout-arrow-size, 8px) / 2);
         box-shadow: 1px -1px 0 rgba(0,0,0, 0.075);
         border-top-right-radius: 2px;
       }
