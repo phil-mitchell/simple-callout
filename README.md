@@ -28,7 +28,11 @@ Then use simple-callout in your project
 
 To ensure that the content inside the callout is layered on top of the callout's arrow, always use elements rather than just text nodes (eg: `<span>text</span>` instead of `text`);
 
-Note for cross-browser support you should also include the [Web Components Polyfill][webcomponents].
+### Note for cross-browser support
+
+You will need to include the [Web Components Polyfill][webcomponents] for all non-chrome browsers.
+
+For IE 10-11 support you should also include a Promise polyfill, like [es6-promise][promise]
 
 --
 
@@ -73,6 +77,7 @@ simple-callout {
 MIT © [Simpla](https://www.simpla.io)
 
 [webcomponents]: https://github.com/webcomponents/webcomponentsjs
+[promise]: https://github.com/stefanpenner/es6-promise
 
 [bower-badge]: https://img.shields.io/bower/v/simple-callout.svg
 [bowerlicense-badge]: https://img.shields.io/bower/l/simple-callout.svg

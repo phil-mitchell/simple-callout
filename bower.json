@@ -20,12 +20,11 @@
     "!LICENSE"
   ],
   "dependencies": {
-    "webcomponentsjs": "^0.7.14",
     "polymer": "^1.6.0",
-    "web-animations-js": "^2.2.1",
-    "es6-promise": "^4.0.5"
+    "web-animations-js": "^2.2.1"
   },
   "devDependencies": {
+    "webcomponentsjs": "^0.7.14",
     "web-component-tester": "^4.0.0"
   }
 }
