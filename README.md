@@ -28,11 +28,18 @@ Then use simple-callout in your project
 
 To ensure that the content inside the callout is layered on top of the callout's arrow, always use elements rather than just text nodes (eg: `<span>text</span>` instead of `text`);
 
-### Note for cross-browser support
+### Polyfills for cross-browser support
 
-You will need to include the [Web Components Polyfill][webcomponents] for all non-chrome browsers.
+Simple callout relies on several emerging standards, and you will need to include polyfills for cross-browser support:
 
-For IE 10-11 support you should also include a Promise polyfill, like [es6-promise][promise]
+- [Web Components Lite][webcomponents] for all non-chrome browsers
+- [Web Animations Next][webanimations] for all non-chrome browsers
+- A Promise polyfill, like [es6-promise][promise], for IE 10 & 11.
+
+```html
+<script src="/bower_components/web-animations-js/web-animations-next.min.js"></script>
+<script src="/bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+```
 
 --
 
