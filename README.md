@@ -30,14 +30,12 @@ To ensure that the content inside the callout is layered on top of the callout's
 
 ### Polyfills for cross-browser support
 
-Simple callout relies on several emerging standards, and you will need to include polyfills for cross-browser support:
+Simple callout relies on emerging standards, and you will need to include polyfills for cross-browser support:
 
 - [Web Components Lite][webcomponents] for all non-chrome browsers
-- [Web Animations Next][webanimations] for all non-chrome browsers
-- A Promise polyfill, like [es6-promise][promise], for IE 10 & 11.
+- A Promise polyfill, like [es6-promise][promise], for IE 10 & 11 support.
 
 ```html
-<script src="/bower_components/web-animations-js/web-animations-next.min.js"></script>
 <script src="/bower_components/webcomponentsjs/webcomponents-lite.js"></script>
 ```
 
@@ -45,15 +43,16 @@ Simple callout relies on several emerging standards, and you will need to includ
 
 ## Options
 
-Property         | Type    | Default | Description                                                                                                                                 
----------------- | ------- | ------- | ------------                                                                                                                                
-`active`         | Boolean | `false` | Controls whether the callout is visible or not                                                                                              
-`arrow`          | String  | `''`    | The position of the arrow on the callout (also sets where the callout expands from). Can be any combination of top/bottom/left/right/center 
-`noOutsideClick` | Boolean | `false` | Disable closing the callout on outside clicks                                                                                               
-`noEscape`       | Boolean | `false` | Disable closing the callout on escape key presses                                                                                           
+Property         | Type    | Default     | Description                                                                                               
+---------------- | ------- | ----------- | ------------                                                                                              
+`active`         | Boolean | `false`     | Controls whether the callout is visible or not                                                            
+`origin`         | String  | `undefined` | The origin position that the callout expands from. Can be any combination of top/bottom/left/right/center 
+`arrow`          | Boolean | `false`     | Whether the callout has a little arrow at its origin                                                      
+`noOutsideClick` | Boolean | `false`     | Disable closing the callout on outside clicks                                                             
+`noEscape`       | Boolean | `false`     | Disable closing the callout on escape key presses                                                         
 
 ```html
-<simple-callout arrow="bottom center" no-escape></simple-callout> 
+<simple-callout origin="bottom center" arrow no-escape></simple-callout> 
 ```
 
 ## Methods
@@ -67,9 +66,9 @@ Method     | Arguments | Description
 ## Styling
 In addition to styling the callout directly, you can also set these CSS properties
 
-Property                      | Default            | Description                 
------------------------------ | ------------------ | ------------                
-`--simple-callout-arrow-size` | `0.75rem`          | Size of the callout's arrow 
+Property                      | Default  | Description                 
+----------------------------- | ---------| ------------                
+`--simple-callout-arrow-size` | `8px`    | Size of the callout's arrow 
 
 Apply properties on simple-callout
 
