@@ -109,16 +109,16 @@ export default {
    * @return {undefined}
    */
   _showCallout() {
-    let animations = [];
+    let animations,
+        toAnimation = ({ frames, opts }) => this.animate(frames, opts),
+        toPromise = (animation) => new Promise((resolve) => animation.onfinish = resolve);
 
     this.visible = true;
 
-    ANIMATIONS.forEach((effect) => {
-      this.animate(effect.frames, effect.opts);
-    });
-
     Promise.all(
-      this.getAnimations().map((animation) => animation.finished)
+      ANIMATIONS
+        .map(toAnimation)
+        .map(toPromise)
     ).then(() => this._opened = true);
   },
 
@@ -127,16 +127,16 @@ export default {
    * @return {undefined}
    */
   _hideCallout() {
-    let animations = [];
+    let animations,
+        toAnimation = ({ frames, opts }) => this.animate(frames.slice().reverse(), opts),
+        toPromise = (animation) => new Promise((resolve) => animation.onfinish = resolve);
 
     this._opened = false;
 
-    ANIMATIONS.forEach((effect) => {
-      this.animate(effect.frames.slice().reverse(), effect.opts);
-    });
-
     Promise.all(
-      this.getAnimations().map((animation) => animation.finished)
+      ANIMATIONS
+        .map(toAnimation)
+        .map(toPromise)
     ).then(() => this.visible = false);
   },
 
