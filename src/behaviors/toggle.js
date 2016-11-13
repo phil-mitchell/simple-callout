@@ -2,8 +2,8 @@ const STANDARD_EASING = 'cubic-bezier(0.4, 0.0, 0.2, 1)',
       ANIMATIONS = [
         {
           frames: [
-            { transform: 'scale(0.75, 0.85)' },
-            { transform: 'scale(1, 1)' }
+            { transform: 'translateZ(0), scale(0.75, 0.85)' },
+            { transform: 'translateZ(0), scale(1, 1)' }
           ],
           opts: {
             easing: STANDARD_EASING,
