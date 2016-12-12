@@ -2,8 +2,8 @@ const STANDARD_EASING = 'cubic-bezier(0.4, 0.0, 0.2, 1)',
       ANIMATIONS = [
         {
           frames: [
-            { transform: 'translateZ(0) scale(0.75, 0.85)' },
-            { transform: 'translateZ(0) scale(1, 1)' }
+            { transform: 'scale(0.75, 0.85)' },
+            { transform: 'scale(1)' }
           ],
           opts: {
             easing: STANDARD_EASING,
@@ -119,7 +119,10 @@ export default {
       ANIMATIONS
         .map(toAnimation)
         .map(toPromise)
-    ).then(() => this._opened = true);
+    ).then(() => {
+      this._forceRepaint();
+      this._opened = true;
+    });
   },
 
   /**
@@ -165,6 +168,17 @@ export default {
 
     document.addEventListener('click', close);
     document.addEventListener('touchend', close);
+  },
+
+  /**
+   * Force a repaint to fix transformed text rendering in Webkit
+   * This is a HACK - keep an eye on it
+   * @return {undefined}
+   */
+  _forceRepaint() {
+    this.style.display = 'none';
+    this.offsetHeight;
+    this.style.display = '';
   },
 
   /**
