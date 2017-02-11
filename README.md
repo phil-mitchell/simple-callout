@@ -1,6 +1,5 @@
 # Simple Callout
 [![Build status][travis-badge]][travis-url] [![Bower dependencies][bowerdeps-badge]][bowerdeps-url] ![Version][bower-badge] ![Size][size-badge]
-<br/>[![Cross browser test status][browser-badges]][travis-url]
 
 A simple, style-agnostic callout box that can be shown and hidden from any position.
 
@@ -51,8 +50,13 @@ Property         | Type    | Default     | Description
 `noOutsideClick` | Boolean | `false`     | Disable closing the callout on outside clicks                                                             
 `noEscape`       | Boolean | `false`     | Disable closing the callout on escape key presses                                                         
 
+Properties can either be set as attributes on the element, or imperitively with Javascript
 ```html
 <simple-callout origin="bottom center" arrow no-escape></simple-callout> 
+
+<script>
+    document.querySelector('simple-callout').active = true;
+</script>
 ```
 
 ## Methods
@@ -93,4 +97,3 @@ MIT © [Simpla](https://www.simpla.io)
 [bowerdeps-badge]: https://img.shields.io/gemnasium/SimpleElements/simple-callout.svg
 [bowerdeps-url]: https://gemnasium.com/bower/simple-callout
 [size-badge]: https://badges.herokuapp.com/size/github/SimpleElements/simple-callout/master/simple-callout.html?gzip=true&color=blue
-[browser-badges]: https://badges.herokuapp.com/travis/SimpleElements/simple-callout/sauce/SimpleElements?labels=none
