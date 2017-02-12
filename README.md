@@ -1,7 +1,7 @@
 # Simple Callout
 [![Build status][travis-badge]][travis-url] [![Bower dependencies][bowerdeps-badge]][bowerdeps-url] ![Version][bower-badge] ![Size][size-badge] [![Published][webcomponents-badge]][webcomponents-url]
 
-A simple, (very) lightweight, style-agnostic callout box that can be shown and hidden from any position.
+Simple callout is a lightweight, style-agnostic callout box that works anywhere.
 
 <!---
 ```
@@ -30,13 +30,13 @@ A simple, (very) lightweight, style-agnostic callout box that can be shown and h
 ```
 -->
 ```html
-<button id="button">toggle callout</button>
+<button id="button">open callout</button>
 
 <simple-callout id="callout" origin="top left" arrow>
   <span>an example callout</span>
 </simple-callout>
 
- <script>
+<script>
   var callout = document.querySelector('#callout'),
       button = document.querySelector('#button');
 
