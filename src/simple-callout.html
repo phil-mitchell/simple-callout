@@ -199,9 +199,8 @@
 
         this.observers = [
           '_focusOnActive(active)',
-          '_goVisibleOnActive(active)',
-          '_closeOnEscape(active)',
-          '_closeOnInactive(active)'
+          '_toggleVisibility(active)',
+          '_closeOnEscape(active)'
         ];
 
         this.listeners = {
@@ -222,26 +221,17 @@
       }
 
       /**
-       * Set hidden false and visible true when active
+       * Toggle visibility of callout based on active state
        * @param  {Boolean} active Value of the active property
        * @return {undefined}
        */
-      _goVisibleOnActive(active) {
+      _toggleVisibility(active) {
         if (active) {
           this.hidden = false;
 
           Polymer.RenderStatus
             .afterNextRender(this, () => this.visible = true);
-        }
-      }
-
-      /**
-       * Set visible false when inactive
-       * @param  {Boolean} active Value of the active property
-       * @return {undefined}
-       */
-      _closeOnInactive(active) {
-        if (!active) {
+        } else {
           this.visible = false;
         }
       }
