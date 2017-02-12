@@ -1,7 +1,51 @@
 # Simple Callout
-[![Build status][travis-badge]][travis-url] [![Bower dependencies][bowerdeps-badge]][bowerdeps-url] ![Version][bower-badge] ![Size][size-badge]
+[![Build status][travis-badge]][travis-url] [![Bower dependencies][bowerdeps-badge]][bowerdeps-url] ![Version][bower-badge] ![Size][size-badge] [![Published][webcomponents-badge]][webcomponents-url]
 
 A simple, style-agnostic callout box that can be shown and hidden from any position.
+
+<!---
+```
+<custom-element-demo>
+  <template>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../iron-icons/iron-icons.html">
+    <link rel="import" href="simple-button.html">
+    <style>
+       body {
+        font-family: sans-serif;
+      }
+
+      button {
+        display: block;
+      }
+
+      simple-callout {
+        padding: 0.75em;
+        margin: 12px;
+        font-size: 14px;
+      }
+    </style>
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
+```html
+<button id="button">toggle callout</button>
+
+<simple-callout id="callout" origin="top left" arrow>
+  <span>an example callout</span>
+</simple-callout>
+
+ <script>
+  var callout = document.querySelector('#callout'),
+      button = document.querySelector('#button');
+
+  button.addEventListener('click', function() {
+    callout.open();
+  });
+</script>
+```
 
 ## Installation & usage
 
@@ -97,3 +141,5 @@ MIT © [Simpla](https://www.simpla.io)
 [bowerdeps-badge]: https://img.shields.io/gemnasium/SimpleElements/simple-callout.svg
 [bowerdeps-url]: https://gemnasium.com/bower/simple-callout
 [size-badge]: https://badges.herokuapp.com/size/github/SimpleElements/simple-callout/master/simple-callout.html?gzip=true&color=blue
+[webcomponents-badge]: https://img.shields.io/badge/webcomponents.org-published-blue.svg
+[webcomponents-url]: https://www.webcomponents.org/element/SimpleElements/simple-callout
