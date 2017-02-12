@@ -88,10 +88,9 @@ Simple callout relies on emerging standards, and you will need to include polyfi
 
 Property         | Type    | Default     | Description                                                                                               
 ---------------- | ------- | ----------- | ------------                                                                                              
-`active`         | Boolean | `false`     | Controls whether the callout is visible or not                                                            
 `origin`         | String  | `undefined` | The origin position that the callout expands from. Can be any combination of top/bottom/left/right/center 
 `arrow`          | Boolean | `false`     | Whether the callout has a little arrow at its origin                                                      
-`noOutsideClick` | Boolean | `false`     | Disable closing the callout on outside clicks                                                             
+`noBlur` | Boolean | `false`     | Disable closing the callout when it loses focus                                                             
 `noEscape`       | Boolean | `false`     | Disable closing the callout on escape key presses                                                         
 
 Properties can either be set as attributes on the element, or imperitively with Javascript

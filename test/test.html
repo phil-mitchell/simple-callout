@@ -10,16 +10,6 @@
     <!-- Import the element to test -->
     <link rel="import" href="../simple-callout.html">
 
-    <!-- Utility for flushing animations in tests -->
-    <script src="../../web-animations-js/web-animations-next.min.js"></script>
-    <script>
-      window.flushAnimations = function() {
-        document.timeline.getAnimations().forEach(function(animation) {
-          animation.finish();
-        });
-      }
-    </script>
-
   </head>
   <body>
     <test-fixture id="default">
@@ -30,7 +20,8 @@
     <script>
       describe('<simple-callout>', function() {
 
-        var component;
+        var component,
+            ANIMATION_DURATION = 300;
 
         beforeEach(function() {
           component = fixture('default');
@@ -43,82 +34,66 @@
         describe('toggling', function() {
 
           it('should be visible when active true', function() {
-            component.active = true;
-            window.flushAnimations();
+            component.open();
 
             setTimeout(function() {
-              expect(component.visible).to.be.okay;
-            }, 0)
+              expect(component.visible).to.be.true;
+            }, 1)
           });
 
-          it('should be hidden when active false', function() {
-            component.active = false;
-            expect(component.visible).to.not.be.okay;
-          });
-
-          it('should go active when open() called', function() {
-            component.active = false;
-            component.open();
-            expect(component.active).to.be.true;
-          });
-
-          it('should go inactive when close() called', function() {
-            component.active = true;
-            window.flushAnimations();
+          it('should go inactive when visible false', function() {
+            comopnent.active = true;
 
             setTimeout(function() {
               component.close();
-              expect(component.active).to.be.false;
-            }, 0);
+              setTimeout(function() {
+                expect(component.active).to.be.false;
+              }, ANIMATION_DURATION)
+            }, ANIMATION_DURATION);
           });
 
         });
 
-        describe('outside clicks', function() {
+        describe('blur', function() {
 
-          it('should close on outside click', function() {
+          it('should close when focus lost', function() {
             component.active = true;
-            window.flushAnimations();
 
             setTimeout(function() {
-              body.click();
-              expect(component.active).to.be.false;
-            }, 0);
+              document.body.click();
+              expect(component.visible).to.be.false;
+            }, ANIMATION_DURATION);
           });
 
-          it('should not close on outside click if noOutsideClick enabled', function() {
-            component.noOutsideClick = true;
+          it('should not close on blur if noBlur enabled', function() {
+            component.noBlur = true;
             component.active = true;
-            window.flushAnimations();
 
             setTimeout(function() {
-              body.click();
-              expect(component.active).to.be.true;
-            });
-          }, 0)
+              document.body.click();
+              expect(component.visible).to.be.true;
+            }, ANIMATION_DURATION);
         });
 
         describe('escape', function() {
 
           it('should close on escape key', function() {
             component.active = true;
-            window.flushAnimations();
 
             setTimeout(function() {
-              component.fire('keyup', { keyCode: 27 }, { node: document.body });
-              expect(component.active).to.be.false;
-            });
-          }, 0);
+              component.fire('keydown', { keyCode: 27 }, { node: document.body });
+              expect(component.visible).to.be.false;
+            }, ANIMATION_DURATION);
+          });
 
           it('should not close on escape key if noEscape enabled', function() {
             component.noEscape = true;
             component.active = true;
-            window.flushAnimations();
 
             setTimeout(function() {
-              component.fire('keyup', { keyCode: 27 }, { node: document.body });
-              expect(component.active).to.be.true;
-            }, 0);
+              component.fire('keydown', { keyCode: 27 }, { node: document.body });
+              expect(component.visible).to.be.true;
+            }, ANIMATION_DURATION);
           })
         });
 

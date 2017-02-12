@@ -20,8 +20,7 @@
     "!LICENSE"
   ],
   "dependencies": {
-    "polymer": "^1.6.0",
-    "web-animations-js": "^2.2.2"
+    "polymer": "^1.6.0"
   },
   "devDependencies": {
     "webcomponentsjs": "^0.7.14",

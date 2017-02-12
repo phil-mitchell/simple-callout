@@ -5,9 +5,6 @@
     <style>
       :host, *, *::before, *::after {
         box-sizing: border-box;
-        -moz-osx-font-smoothing: grayscale;
-         -webkit-font-smoothing: antialiased;
-                 font-smoothing: antialiased;
       }
 
       /**
@@ -15,16 +12,35 @@
        */
       :host {
         position: relative;
-        display: none;
+        display: inline-block;
+        will-change: transform;
         background: white;
         border-radius: 3px;
-        will-change: transform;
-        box-shadow: 0 1px 2px rgba(0,0,0, 0.2),
-                    0 0 1px rgba(0,0,0, 0.1);
+        outline: none;
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+                    0 1px 5px 0 rgba(0, 0, 0, 0.12),
+                    0 3px 1px -2px rgba(0, 0, 0, 0.2);
+        -moz-osx-font-smoothing: grayscale;
+         -webkit-font-smoothing: antialiased;
+                 font-smoothing: antialiased;
+      }
+
+      :host(:not([active])) {
+        display: none;
+      }
+
+      :host(:not([visible])) {
+        transform: scale(0.75, 0.85);
+        opacity: 0;
+        transition: transform 125ms cubic-bezier(0.4, 0.0, 1, 1),
+                    opacity 90ms ease;
       }
 
       :host([visible]) {
-        display: inline-block;
+        opacity: 1;
+        transform: scale(1);
+        transition: transform 150ms cubic-bezier(0.0, 0.0, 0.2, 1),
+                    opacity 100ms ease;
       }
 
       /**
@@ -49,10 +65,6 @@
        * Arrow positioning
        */
       /* Top */
-      :host([arrow][origin*="top"]) {
-        transform: translateY(calc(var(--simple-callout-arrow-size, 8px) / 2));
-      }
-
       :host([arrow][origin*="top"])::before {
         top: calc(0px - var(--simple-callout-arrow-size, 8px) / 2);
         box-shadow: -1px -1px rgba(0,0,0, 0.075);
@@ -60,10 +72,6 @@
       }
 
       /* Bottom */
-      :host([arrow][origin*="bottom"]) {
-        transform: translateY(calc(0 - var(--simple-callout-arrow-size, 8px) / 2));
-      }
-
       :host([arrow][origin*="bottom"])::before {
         bottom: calc(0px - var(--simple-callout-arrow-size, 8px) / 2);
         box-shadow: 1px 1px 1px rgba(0,0,0, 0.2);
@@ -84,10 +92,6 @@
       }
 
       /* Left side */
-      :host([arrow][origin="left"]) {
-        transform: translateX(calc(var(--simple-callout-arrow-size, 8px) / 2));
-      }
-
       :host([arrow][origin="left"])::before {
         top: calc(50% - var(--simple-callout-arrow-size, 8px) / 2);
         left: calc(0px - var(--simple-callout-arrow-size, 8px) / 2);
@@ -96,10 +100,6 @@
       }
 
       /* Right side */
-      :host([arrow][origin="right"]) {
-        transform: translateX(0 - calc(var(--simple-callout-arrow-size, 8px) / 2));
-      }
-
       :host([arrow][origin="right"])::before {
         top: calc(50% - var(--simple-callout-arrow-size, 8px) / 2);
         right: calc(0px - var(--simple-callout-arrow-size, 8px) / 2);
@@ -111,16 +111,45 @@
     <content></content>
 
   </template>
-
-  <script src="../web-animations-js/web-animations.min.js"></script>
   <script>
-    import toggle from './behaviors/toggle';
-
     class SimpleCallout {
       beforeRegister() {
         this.is = 'simple-callout',
 
         this.properties = {
+
+          /**
+           * State of callout
+           * @type {Boolean}
+           */
+          active: {
+            type: Boolean,
+            reflectToAttribute: true,
+            readonly: true,
+            notify: true
+          },
+
+          /**
+           * If callout is visible
+           * @type {Boolean}
+           */
+          visible: {
+            type: Boolean,
+            reflectToAttribute: true,
+            readonly: true
+          },
+
+          /**
+           * Disable closing when focus lost
+           * @type {Boolean}
+           */
+          noBlur: Boolean,
+
+          /**
+           * Disable closing when user presses escape key
+           * @type {Boolean}
+           */
+          noEscape: Boolean,
 
           /**
           * Where the callout expands from, space-separated list
@@ -140,13 +169,82 @@
           arrow: {
             type: Boolean,
             reflectToAttribute: true
+          },
+
+          tabindex: {
+            type: Number,
+            reflectToAttribute: true,
+            readonly: true,
+            value: 0
           }
 
         };
-      };
 
-      get behaviors() {
-        return [ toggle ];
+        this.observers = [
+          '_focusOnActive(active)',
+          '_goVisibleOnActive(active)',
+          '_closeOnEscape(active)'
+        ];
+
+        this.listeners = {
+          blur: '_closeOnBlur',
+          transitionend: '_goInactiveOnClose'
+        };
+      }
+
+      open() {
+        this.active = true;
+      }
+
+      close() {
+        this.visible = false;
+      }
+
+      toggle() {
+        if (!this.active) {
+          this.open();
+        } else {
+          this.close();
+        }
+      }
+
+      _focusOnActive(active) {
+        if (active) {
+          this.focus();
+        }
+      }
+
+      _goVisibleOnActive(active) {
+        if (active) {
+          Polymer.RenderStatus
+            .afterNextRender(this, () => this.visible = true);
+        }
+      }
+
+      _goInactiveOnClose(e) {
+        if (!this.visible) {
+          this.active = false;
+        }
+      }
+
+      _closeOnBlur(e) {
+        if (!this.noBlur) {
+          this.visible = false;
+        }
+      }
+
+      _closeOnEscape(active) {
+        let closeIfEscape = (e) => {
+          if (!this.noEscape && e.keyCode === 27) {
+            this.active = false;
+          }
+        };
+
+        if (active) {
+          document.addEventListener('keydown', closeIfEscape);
+        } else {
+          document.removeEventListener('keydown', closeIfEscape);
+        }
       }
 
       /**
