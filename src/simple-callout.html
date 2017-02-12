@@ -25,7 +25,7 @@
                  font-smoothing: antialiased;
       }
 
-      :host(:not([active])) {
+      :host([hidden])) {
         display: none;
       }
 
@@ -124,18 +124,31 @@
            */
           active: {
             type: Boolean,
-            reflectToAttribute: true,
-            readonly: true,
+            value: false,
             notify: true
           },
 
           /**
            * If callout is visible
+           * Used for transitions
            * @type {Boolean}
            */
           visible: {
             type: Boolean,
             reflectToAttribute: true,
+            value: false,
+            readonly: true
+          },
+
+          /**
+           * If callout is hidden
+           * Used for transitions
+           * @type {Boolean}
+           */
+          hidden: {
+            type: Boolean,
+            reflectToAttribute: true,
+            value: true,
             readonly: true
           },
 
@@ -171,6 +184,10 @@
             reflectToAttribute: true
           },
 
+          /**
+           * Make callout focuseable
+           * @type {Number}
+           */
           tabindex: {
             type: Number,
             reflectToAttribute: true,
@@ -183,56 +200,79 @@
         this.observers = [
           '_focusOnActive(active)',
           '_goVisibleOnActive(active)',
-          '_closeOnEscape(active)'
+          '_closeOnEscape(active)',
+          '_closeOnInactive(active)'
         ];
 
         this.listeners = {
           blur: '_closeOnBlur',
-          transitionend: '_goInactiveOnClose'
+          transitionend: '_hideAfterInactiveTransition'
         };
       }
 
-      open() {
-        this.active = true;
-      }
-
-      close() {
-        this.visible = false;
-      }
-
-      toggle() {
-        if (!this.active) {
-          this.open();
-        } else {
-          this.close();
-        }
-      }
-
+      /**
+       * Auto focus the callout on active
+       * @param  {Boolean} active Value of the active property
+       * @return {undefined}
+       */
       _focusOnActive(active) {
         if (active) {
           this.focus();
         }
       }
 
+      /**
+       * Set hidden false and visible true when active
+       * @param  {Boolean} active Value of the active property
+       * @return {undefined}
+       */
       _goVisibleOnActive(active) {
         if (active) {
+          this.hidden = false;
+
           Polymer.RenderStatus
             .afterNextRender(this, () => this.visible = true);
         }
       }
 
-      _goInactiveOnClose(e) {
-        if (!this.visible) {
-          this.active = false;
-        }
-      }
-
-      _closeOnBlur(e) {
-        if (!this.noBlur) {
+      /**
+       * Set visible false when inactive
+       * @param  {Boolean} active Value of the active property
+       * @return {undefined}
+       */
+      _closeOnInactive(active) {
+        if (!active) {
           this.visible = false;
         }
       }
 
+      /**
+       * Set hidden if visible false at end of transitions
+       * @param  {Event} e Transitionend event
+       * @return {undefined}
+       */
+      _hideAfterInactiveTransition(e) {
+        if (!this.visible) {
+          this.hidden = true;
+        }
+      }
+
+      /**
+       * Close the callout when it loses focus
+       * @param  {Event} e Blur event
+       * @return {undefined}
+       */
+      _closeOnBlur(e) {
+        if (!this.noBlur) {
+          this.active = false;
+        }
+      }
+
+      /**
+       * Close the callout on escape keypress
+       * @param  {Boolean} active Value of the active property
+       * @return {undefined}
+       */
       _closeOnEscape(active) {
         let closeIfEscape = (e) => {
           if (!this.noEscape && e.keyCode === 27) {

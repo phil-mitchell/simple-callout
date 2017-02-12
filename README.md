@@ -1,7 +1,7 @@
 # Simple Callout
 [![Build status][travis-badge]][travis-url] [![Bower dependencies][bowerdeps-badge]][bowerdeps-url] ![Version][bower-badge] ![Size][size-badge] [![Published][webcomponents-badge]][webcomponents-url]
 
-A simple, style-agnostic callout box that can be shown and hidden from any position.
+A simple, (very) lightweight, style-agnostic callout box that can be shown and hidden from any position.
 
 <!---
 ```
@@ -42,7 +42,7 @@ A simple, style-agnostic callout box that can be shown and hidden from any posit
       button = document.querySelector('#button');
 
   button.addEventListener('click', function() {
-    callout.open();
+    callout.active = true;
   });
 </script>
 ```
@@ -71,12 +71,25 @@ Then use simple-callout in your project
 
 To ensure that the content inside the callout is layered on top of the callout's arrow, always use elements rather than just text nodes (eg: `<span>text</span>` instead of `text`);
 
+To open/close the callout, toggle its `active` property
+
+```js
+var callout = document.querySelector('simple-callout');
+
+// Open callout
+callout.active = true;
+
+// Close callout
+callout.active = false;
+```
+
 ### Polyfills for cross-browser support
 
-Simple callout relies on emerging standards, and you will need to include polyfills for cross-browser support:
+Simple callout relies on emerging web standards, and you'll need to include the [Web Components Lite][webcomponents] polyfill for full cross-browser support:
 
-- [Web Components Lite][webcomponents] for all non-chrome browsers
-- A Promise polyfill, like [es6-promise][promise], for IE 10 & 11 support.
+```shell
+bower install webcomponentsjs --save
+```
 
 ```html
 <script src="/bower_components/webcomponentsjs/webcomponents-lite.js"></script>
@@ -88,9 +101,10 @@ Simple callout relies on emerging standards, and you will need to include polyfi
 
 Property         | Type    | Default     | Description                                                                                               
 ---------------- | ------- | ----------- | ------------                                                                                              
+`active`         | Boolean | `false`     | Whether the callout is open or not
 `origin`         | String  | `undefined` | The origin position that the callout expands from. Can be any combination of top/bottom/left/right/center 
 `arrow`          | Boolean | `false`     | Whether the callout has a little arrow at its origin                                                      
-`noBlur` | Boolean | `false`     | Disable closing the callout when it loses focus                                                             
+`noBlur`         | Boolean | `false`     | Disable closing the callout when it loses focus                                                             
 `noEscape`       | Boolean | `false`     | Disable closing the callout on escape key presses                                                         
 
 Properties can either be set as attributes on the element, or imperitively with Javascript
@@ -98,17 +112,9 @@ Properties can either be set as attributes on the element, or imperitively with 
 <simple-callout origin="bottom center" arrow no-escape></simple-callout> 
 
 <script>
-    document.querySelector('simple-callout').active = true;
+  document.querySelector('simple-callout').noBlur = true;
 </script>
 ```
-
-## Methods
-
-Method     | Arguments | Description                          
----------- | --------- | ------------                         
-`open()`   | `none`    | Open the callout   
-`close()`  | `none`    | Close the callout  
-`toggle()` | `none`    | Toggle the callout 
 
 ## Styling
 In addition to styling the callout directly, you can also set these CSS properties

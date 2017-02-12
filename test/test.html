@@ -33,21 +33,23 @@
 
         describe('toggling', function() {
 
-          it('should be visible when active true', function() {
-            component.open();
+          it('should go visible when active true', function() {
+            component.active = true;
 
             setTimeout(function() {
               expect(component.visible).to.be.true;
+              expect(component.hidden).to.be.false;
             }, 1)
           });
 
-          it('should go inactive when visible false', function() {
+          it('should hide when active false', function() {
             comopnent.active = true;
 
             setTimeout(function() {
-              component.close();
+              component.active = false;
               setTimeout(function() {
-                expect(component.active).to.be.false;
+                expect(component.visible).to.be.false;
+                expect(component.hidden).to.be.true;
               }, ANIMATION_DURATION)
             }, ANIMATION_DURATION);
           });
@@ -61,7 +63,7 @@
 
             setTimeout(function() {
               document.body.click();
-              expect(component.visible).to.be.false;
+              expect(component.active).to.be.false;
             }, ANIMATION_DURATION);
           });
 
@@ -71,7 +73,7 @@
 
             setTimeout(function() {
               document.body.click();
-              expect(component.visible).to.be.true;
+              expect(component.active).to.be.true;
             }, ANIMATION_DURATION);
         });
 
@@ -82,7 +84,7 @@
 
             setTimeout(function() {
               component.fire('keydown', { keyCode: 27 }, { node: document.body });
-              expect(component.visible).to.be.false;
+              expect(component.active).to.be.false;
             }, ANIMATION_DURATION);
           });
 
@@ -92,7 +94,7 @@
 
             setTimeout(function() {
               component.fire('keydown', { keyCode: 27 }, { node: document.body });
-              expect(component.visible).to.be.true;
+              expect(component.active).to.be.true;
             }, ANIMATION_DURATION);
           })
         });
