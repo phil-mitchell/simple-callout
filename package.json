@@ -1,6 +1,6 @@
 {
   "name": "simple-callout",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "A simple callout box/tooltip",
   "main": "simple-callout.html",
   "scripts": {
