@@ -106,9 +106,9 @@ Properties can either be set as attributes on the element, or imperitively with 
 
 Method     | Arguments | Description                          
 ---------- | --------- | ------------                         
-`open()`   | `none`    | Utility method to open the callout   
-`close()`  | `none`    | Utility method to close the callout  
-`toggle()` | `none`    | Utility method to toggle the callout 
+`open()`   | `none`    | Open the callout   
+`close()`  | `none`    | Close the callout  
+`toggle()` | `none`    | Toggle the callout 
 
 ## Styling
 In addition to styling the callout directly, you can also set these CSS properties
