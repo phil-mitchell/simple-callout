@@ -1,6 +1,6 @@
 {
   "name": "simple-callout",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "Lightweight, style-agnostic callout box that works anywhere",
   "main": "simple-callout.html",
   "scripts": {
