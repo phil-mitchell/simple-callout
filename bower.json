@@ -16,14 +16,14 @@
   "homepage": "https://github.com/SimpleElements/simple-callout/",
   "ignore": [
     "*",
+    "!src",
     "!*.html",
     "!LICENSE"
   ],
   "dependencies": {
-    "polymer": "^1.6.0"
+    "polymer": "^2.0.0"
   },
   "devDependencies": {
-    "webcomponentsjs": "^0.7.14",
-    "web-component-tester": "^4.0.0"
+    "web-component-tester": "^6.0.0"
   }
 }

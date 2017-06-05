@@ -30,7 +30,6 @@
       }
 
       :host(:not([visible])) {
-        transform: scale(0.75, 0.85);
         opacity: 0;
         transition: transform 125ms cubic-bezier(0.4, 0.0, 1, 1),
                     opacity 90ms ease;
@@ -38,7 +37,6 @@
 
       :host([visible]) {
         opacity: 1;
-        transform: scale(1);
         transition: transform 150ms cubic-bezier(0.0, 0.0, 0.2, 1),
                     opacity 100ms ease;
       }
@@ -112,6 +110,9 @@
 
   </template>
   <script>
+    const DEFAULT_MATRIX = [ 0, 0, 0, 0, 0, 0 ],
+          SCALE_FROM = 0.85;
+
     class SimpleCallout {
       beforeRegister() {
         this.is = 'simple-callout',
@@ -136,7 +137,6 @@
           visible: {
             type: Boolean,
             reflectToAttribute: true,
-            value: false,
             readonly: true
           },
 
@@ -198,6 +198,7 @@
         };
 
         this.observers = [
+          '_applyScale(visible)',
           '_focusOnActive(active)',
           '_toggleVisibility(active)',
           '_closeOnEscape(active)'
@@ -275,6 +276,14 @@
         } else {
           document.removeEventListener('keydown', closeIfEscape);
         }
+      }
+
+      _applyScale(visible) {
+        const { transform } = getComputedStyle(this),
+              values = /matrix/.test(transform) && transform.split('(')[1].split(')')[0].split(','),
+              scaleMatrix = scale => `matrix(${scale},${values[1]},${values[2]},${scale},${values[4]},${values[5]})`;
+
+        this.style.transform = visible ? scaleMatrix(1) : scaleMatrix(SCALE_FROM);
       }
 
       /**
