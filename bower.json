@@ -21,9 +21,12 @@
     "!LICENSE"
   ],
   "dependencies": {
-    "polymer": "^2.0.0"
+    "polymer": "^1.8.0"
   },
   "devDependencies": {
     "web-component-tester": "^6.0.0"
+  },
+  "resolutions": {
+    "polymer": "^1.8.0"
   }
 }
