@@ -1,6 +1,6 @@
 {
   "name": "simple-callout",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "authors": [
     "Sean King"
   ],
@@ -24,7 +24,6 @@
   "dependencies": {
     "polymer": "^2.0.0"
   },
-  
   "devDependencies": {
     "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^2.0.0",
     "web-component-tester": "^6.0.0"
