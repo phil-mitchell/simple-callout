@@ -5,50 +5,73 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <title>simple-callout Demo</title>
 
-    <!-- Import Web Components polyfill -->
-    <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+    <!-- Import demo page deps -->
+    <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^1.0.0/webcomponents-loader.js"></script>
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
 
-    <!-- Use shadow DOM if available -->
-    <script>
-      window.Polymer = { dom: 'shadow' };
-    </script>
-
-    <!-- Import component -->
+    <!-- Import simple-callout -->
     <link rel="import" href="../simple-callout.html">
 
+    <!-- Demo styles -->
     <style>
+      /* Page styles */
       body {
         font-family: sans-serif;
+        color: #303c46
+      }
+
+      .wrapper {
+        width: 90%;
+        max-width: 38rem;
+        margin: 2rem auto;
+      }
+
+      .demo {
+        display: inline-block;
+        width: 100%;
+        margin: 2rem 0;
+      }
+
+      .demo__title {
+        font-size: 1.4rem;
+        font-weight: 400;
       }
 
       button {
-        display: block;
+        display: block
       }
 
       simple-callout {
-        padding: 0.75em;
-        margin: 12px;
-        font-size: 14px;
+        margin: 10px 0 20px;
+        padding: 0.5em 1em;
+        font-size: 0.85em;
       }
     </style>
-
   </head>
-  <body unresolved>
 
-    <button id="button">open callout</button>
+  <body>
+    <div class="wrapper">
 
-    <simple-callout id="callout" origin="top left" arrow>
-      <span>an example callout</span>
-    </simple-callout>
+      <div class="demo">
+        <h1 class="demo__title">Basic demo</h1>
+        <demo-snippet>
+          <template>
+            <button id="button">open callout</button>
 
-    <script>
-      var callout = document.querySelector('#callout'),
-          button = document.querySelector('#button');
+            <simple-callout id="callout" origin="top center" arrow>
+              <span>callout</span>
+            </simple-callout>
 
-      button.addEventListener('click', function() {
-        callout.active = !callout.active;
-      });
-    </script>
+            <script>
+              const callout = document.querySelector('#callout'),
+                    button = document.querySelector('#button');
 
+              button.addEventListener('click', () => callout.active = true);
+            </script>
+          </template>
+        </demo-snippet>
+      </div>
+
+    </div>
   </body>
 </html>
