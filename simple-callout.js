@@ -1,8 +1,10 @@
-<link rel="import" href="../polymer/polymer-element.html">
-<link rel="import" href="../polymer/lib/utils/render-status.html">
+import { Element } from '@polymer/polymer/polymer-element.js';
+import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
+const SCALE_FROM = 0.85;
 
-<dom-module id="simple-callout">
-  <template>
+class SimpleCallout extends Element {
+  static get template() {
+    return `
     <style>
       /**
        * Callout box
@@ -108,14 +110,9 @@
     </style>
 
     <slot></slot>
+`;
+  }
 
-  </template>
-</dom-module>
-
-<script>
-const SCALE_FROM = 0.85;
-
-class SimpleCallout extends Polymer.Element {
   static get is() {
     return 'simple-callout';
   }
@@ -235,8 +232,7 @@ class SimpleCallout extends Polymer.Element {
     if (active) {
       this.hidden = false;
 
-      Polymer.RenderStatus
-        .afterNextRender(this, () => this.visible = true);
+      afterNextRender(this, () => this.visible = true);
     } else {
       this.visible = false;
     }
@@ -306,4 +302,3 @@ class SimpleCallout extends Polymer.Element {
 }
 
 customElements.define(SimpleCallout.is, SimpleCallout);
-</script>

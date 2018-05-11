@@ -6,10 +6,10 @@
 
     <!-- Setup WCT -->
     <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^1.0.0/webcomponents-loader.js"></script>
-    <script src="../../web-component-tester/browser.js"></script>
+    <script src="web-component-tester/browser.js"></script>
 
     <!-- Import simple-callout  -->
-    <link rel="import" href="../simple-callout.html">
+    <script type="module" src="../simple-callout.js"></script>
 
   </head>
   <body>
@@ -20,82 +20,83 @@
       </template>
     </test-fixture>
 
-    <script>
-      const ANIMATION_DURATION = 300;
+    <script type="module">
+import '../simple-callout.js';
+const ANIMATION_DURATION = 300;
 
-      describe('<simple-callout>', () => {
-        let component;
+describe('<simple-callout>', () => {
+  let component;
 
-        beforeEach(() => component = fixture('default'));
+  beforeEach(() => component = fixture('default'));
 
-        it('is okay', () => expect(component).to.be.ok);
+  it('is okay', () => expect(component).to.be.ok);
 
-        describe('toggling', () => {
+  describe('toggling', () => {
 
-          it('should go visible when active true', () => {
-            component.active = true;
-            setTimeout(() => {
-              expect(component.visible).to.be.true;
-              expect(component.hidden).to.be.false;
-            }, ANIMATION_DURATION)
-          });
+    it('should go visible when active true', () => {
+      component.active = true;
+      setTimeout(() => {
+        expect(component.visible).to.be.true;
+        expect(component.hidden).to.be.false;
+      }, ANIMATION_DURATION)
+    });
 
-          it('should hide when active false', () => {
+    it('should hide when active false', () => {
 
-            component.active = true;
+      component.active = true;
 
-            setTimeout(() => {
-              component.active = false;
-              setTimeout(() => {
-                expect(component.visible).to.be.false;
-                expect(component.hidden).to.be.true;
-              }, ANIMATION_DURATION)
-            }, ANIMATION_DURATION);
-          });
+      setTimeout(() => {
+        component.active = false;
+        setTimeout(() => {
+          expect(component.visible).to.be.false;
+          expect(component.hidden).to.be.true;
+        }, ANIMATION_DURATION)
+      }, ANIMATION_DURATION);
+    });
 
-        });
+  });
 
-        describe('blur', () => {
+  describe('blur', () => {
 
-          it('should close when focus lost', () => {
-            component.active = true;
-            setTimeout(() => {
-              document.body.click();
-              expect(component.active).to.be.false;
-            }, ANIMATION_DURATION);
-          });
+    it('should close when focus lost', () => {
+      component.active = true;
+      setTimeout(() => {
+        document.body.click();
+        expect(component.active).to.be.false;
+      }, ANIMATION_DURATION);
+    });
 
-          it('should not close on blur if noBlur enabled', () => {
-            component.noBlur = true;
-            component.active = true;
-            setTimeout(() => {
-              document.body.click();
-              expect(component.active).to.be.true;
-            }, ANIMATION_DURATION);
-          });
-        });
+    it('should not close on blur if noBlur enabled', () => {
+      component.noBlur = true;
+      component.active = true;
+      setTimeout(() => {
+        document.body.click();
+        expect(component.active).to.be.true;
+      }, ANIMATION_DURATION);
+    });
+  });
 
-        describe('escape', () => {
+  describe('escape', () => {
 
-          it('should close on escape key', () => {
-            component.active = true;
-            setTimeout(() => {
-              component.fire('keydown', { keyCode: 27 }, { node: document.body });
-              expect(component.active).to.be.false;
-            }, ANIMATION_DURATION);
-          });
+    it('should close on escape key', () => {
+      component.active = true;
+      setTimeout(() => {
+        component.fire('keydown', { keyCode: 27 }, { node: document.body });
+        expect(component.active).to.be.false;
+      }, ANIMATION_DURATION);
+    });
 
-          it('should not close on escape key if noEscape enabled', () => {
-            component.noEscape = true;
-            component.active = true;
-            setTimeout(() => {
-              component.fire('keydown', { keyCode: 27 }, { node: document.body });
-              expect(component.active).to.be.true;
-            }, ANIMATION_DURATION);
-          });
-        });
+    it('should not close on escape key if noEscape enabled', () => {
+      component.noEscape = true;
+      component.active = true;
+      setTimeout(() => {
+        component.fire('keydown', { keyCode: 27 }, { node: document.body });
+        expect(component.active).to.be.true;
+      }, ANIMATION_DURATION);
+    });
+  });
 
-      });
-    </script>
+});
+</script>
   </body>
 </html>

@@ -7,10 +7,10 @@
 
     <!-- Import demo page deps -->
     <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^1.0.0/webcomponents-loader.js"></script>
-    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    <script type="module" src="@polymer/iron-demo-helpers/demo-snippet.js"></script>
 
     <!-- Import simple-callout -->
-    <link rel="import" href="../simple-callout.html">
+    <script type="module" src="../simple-callout.js"></script>
 
     <!-- Demo styles -->
     <style>
@@ -62,12 +62,14 @@
               <span>callout</span>
             </simple-callout>
 
-            <script>
-              const callout = document.querySelector('#callout'),
-                    button = document.querySelector('#button');
+            <script type="module">
+import '@polymer/iron-demo-helpers/demo-snippet.js';
+import '../simple-callout.js';
+const callout = document.querySelector('#callout'),
+      button = document.querySelector('#button');
 
-              button.addEventListener('click', () => callout.active = true);
-            </script>
+button.addEventListener('click', () => callout.active = true);
+</script>
           </template>
         </demo-snippet>
       </div>
