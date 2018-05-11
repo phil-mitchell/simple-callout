@@ -1,10 +1,10 @@
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
 const SCALE_FROM = 0.85;
 
 class SimpleCallout extends PolymerElement {
   static get template() {
-    return `
+    return html`
     <style>
       /**
        * Callout box
